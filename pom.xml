@@ -21,7 +21,7 @@
         <c.periphery>https://raw.githubusercontent.com/vsergeev/c-periphery/devel/src</c.periphery>
         -->
         <!-- Change CFLAGS here or pass on mvn command line to override -->
-        <cflags>-O3 -std=gnu99 -pedantic -Wall -Wextra -Wno-unused-parameter -fPIC -DPERIPHERY_GPIO_CDEV_SUPPORT=1</cflags>
+        <cflags></cflags>
     </properties>
     
     <build>
@@ -260,7 +260,7 @@
                             The default include path for gcc may contain older gpio.h header file.
                             -->
                             <configureArgs>
-                                <arg>CFLAGS=${cflags}</arg>
+                                <arg>CFLAGS=${cflags} -O3 -std=gnu99 -pedantic -Wall -Wextra -Wno-unused-parameter -fPIC -DPERIPHERY_GPIO_CDEV_SUPPORT=1</arg>
                             </configureArgs>
                         </configuration>                        
                         <goals>
