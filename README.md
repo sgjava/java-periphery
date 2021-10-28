@@ -106,16 +106,13 @@ rules instead if you wish):
 * `sudo usermod -a -G dialout username` (Use a non-root username)
 * `sudo groupadd periphery`
 * `sudo usermod -a -G periphery username` (Use a non-root username)
-* `ls /dev/gpio*` (Note chip names to add below)
-* `ls /dev/spidev*` (Note SPI channels below)
-* `ls /dev/i2c*` (Note i2c devices below)
 * `sudo nano /etc/rc.local`
 <pre><code>chown -R root:periphery /dev/gpiochip* #/dev/gpiomem for sandbox
 chmod -R ug+rw /dev/gpiochip* #/dev/gpiomem for sandbox
-chown -R root:periphery /dev/i2c-0
-chmod -R ug+rw /dev/i2c-0
-chown -R root:periphery /dev/spidev1.0
-chmod -R ug+rw /dev/spidev1.0
+chown -R root:periphery /dev/i2c*
+chmod -R ug+rw /dev/i2c*
+chown -R root:periphery /dev/spidev*
+chmod -R ug+rw /dev/spidev*
 chown -R root:periphery /sys/devices/platform/leds/leds
 chmod -R ug+rw /sys/devices/platform/leds/leds</code></pre>
 * PWM udev rules
@@ -255,8 +252,7 @@ starts at 352 and the on board button is at 355, so 355 - 352 = 3 for GPIO
 character device.
 
 ## Run demos
-* `cd ~/java-periphery/target`
-* `java -cp java-periphery-1.0.0-SNAPSHOT.jar:java-periphery-1.0.0-SNAPSHOT-linux32.jar com.codeferm.periphery.demo.GpioPerf -d /dev/gpiochip0 -l 203`
+* `java -cp $HOME/java-periphery/target/java-periphery-1.0.0-SNAPSHOT.jar:$HOME/java-periphery/target/java-periphery-1.0.0-SNAPSHOT-linux32.jar com.codeferm.periphery.demo.LedBlink -d /dev/gpiochip0 -l 203`
 
 Note that the native library jar has a suffix such as linux32, so depending on
 your target platform it could be different. To see a list of demos 
