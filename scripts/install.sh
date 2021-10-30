@@ -38,19 +38,19 @@ javahome=/usr/lib/jvm/jdk17
 jdk=17
 # ARM 32
 if [ "$arch" = "armv7l" ]; then
-    jdkurl="https://cdn.azul.com/zulu-embedded/bin/zulu11.50.19-ca-jdk11.0.12-linux_aarch32hf.tar.gz"
+    jdkurl="https://cdn.azul.com/zulu-embedded/bin/zulu11.52.13-ca-jdk11.0.13-linux_aarch32hf.tar.gz"
     #  No JDK 17 for ARM32
     javahome=/usr/lib/jvm/jdk11
     jdk=11
 # ARM 64
 elif [ "$arch" = "aarch64" ]; then
-    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-linux_aarch64.tar.gz"
+    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-linux_aarch64.tar.gz"
 # X86_32
 elif [ "$arch" = "i586" ] || [ "$arch" = "i686" ]; then
-    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-linux_i686.tar.gz"
+    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-linux_i686.tar.gz"
 # X86_64	
 elif [ "$arch" = "x86_64" ]; then
-    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.28.13-ca-jdk17.0.0-linux_x64.tar.gz"
+    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-linux_x64.tar.gz"
 fi
 export javahome
 # Just JDK archive name
