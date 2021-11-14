@@ -138,12 +138,11 @@ public class I2c implements AutoCloseable {
     }
 
     /**
-     * Read array from i2c register. Unlike i2cReadReg the bytes values are not "& 0xff", thus the caller will need to do this.
+     * Read array from i2c 8 bit register. Unlike i2cReadReg8 the bytes values are not "& 0xff", thus the caller will need to do
+     * this.
      *
      * In order to read a register, we first do a "dummy write" by writing 0 bytes to the register we want to read from. This is
-     * similar to writing to a register except it's 1 byte rather than 2. Normally you can use an array of i2c_msg in C for multiple
-     * messages using i2c_transfer. There doesn't appear to be a way to do this with HawtJNI using I2cMsg[] and memmove, so we do
-     * two i2c_transfer calls.
+     * similar to writing to a register except it's 1 byte rather than 2.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -151,41 +150,12 @@ public class I2c implements AutoCloseable {
      * @param buf Read buffer.
      * @return 0 on success, or a negative I2C error code on failure.
      */
-    public static int i2cReadReg(final long i2c, final short addr, final short reg, final byte[] buf) {
-        // First transaction is write
-        final var msg = new I2cMsg();
-        msg.addr = addr;
-        msg.flags = 0x00;
-        msg.len = 1;
-        // Allocate native memory for buffer
-        final var writeBuf = malloc(1);
-        final var regVal = new byte[1];
-        regVal[0] = (byte) reg;
-        memMove(writeBuf, regVal, regVal.length);
-        msg.buf = writeBuf;
-        // Transfer message
-        var error = i2cTransfer(i2c, msg, 1);
-        // Free write buffer
-        free(writeBuf);
-        if (error == I2C_SUCCESS) {
-            // Second transaction is read
-            msg.addr = addr;
-            msg.flags = I2C_M_RD;
-            msg.len = (short) buf.length;
-            // Allocate native memory for buffer
-            final var readBuf = malloc(buf.length);
-            msg.buf = readBuf;
-            // Transfer message
-            error = i2cTransfer(i2c, msg, 1);
-            memMove(buf, msg.buf, buf.length);
-            // Free read buffer
-            free(readBuf);
-        }
-        return error;
+    public static int i2cReadReg8(final long i2c, final short addr, final short reg, final byte[] buf) {
+        return i2cRead8(i2c, addr, reg, buf, buf.length);
     }
 
     /**
-     * Read i2c register.
+     * Read array from i2c 8 bit register.
      *
      * In order to read a register, we first do a "dummy write" by writing 0 bytes to the register we want to read from. This is
      * similar to writing to a register except it's 1 byte rather than 2.
@@ -197,15 +167,15 @@ public class I2c implements AutoCloseable {
      * @return 0 on success, or a negative I2C error code on failure.
      *
      */
-    public static int i2cReadReg(final long i2c, final short addr, final short reg, final short regVal[]) {
+    public static int i2cReadReg8(final long i2c, final short addr, final short reg, final short regVal[]) {
         final var buf = new byte[1];
-        final var error = i2cReadReg(i2c, addr, reg, buf);
+        final var error = i2cReadReg8(i2c, addr, reg, buf);
         regVal[0] = (short) (buf[0] & 0xff);
         return error;
     }
 
     /**
-     * Read two i2c registers and combine them.
+     * Read two i2c 8 bit registers and combine them.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -213,13 +183,13 @@ public class I2c implements AutoCloseable {
      * @param regVal Read buffer.
      * @return 0 on success, or a negative I2C error code on failure.
      */
-    public int i2cReadWord(final long i2c, final short addr, final short reg, final int regVal[]) {
+    public int i2cReadWord8(final long i2c, final short addr, final short reg, final int regVal[]) {
         final var highBuf = new short[1];
-        var error = i2cReadReg(i2c, addr, reg, highBuf);
+        var error = i2cReadReg8(i2c, addr, reg, highBuf);
         if (error == I2C_SUCCESS) {
             final var lowBuf = new short[1];
             // Increment register for next read
-            error = i2cReadReg(i2c, addr, (short) (reg + 1), lowBuf);
+            error = i2cReadReg8(i2c, addr, (short) (reg + 1), lowBuf);
             final int value = (highBuf[0] << 8) + lowBuf[0];
             if (value >= 0x8000) {
                 regVal[0] = -((65535 - value) + 1);
@@ -231,7 +201,7 @@ public class I2c implements AutoCloseable {
     }
 
     /**
-     * Write value to i2c register.
+     * Write value to i2c 8 bit register.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -239,23 +209,8 @@ public class I2c implements AutoCloseable {
      * @param value Value to write.
      * @return 0 on success, or a negative I2C error code on failure.
      */
-    public static int i2cWriteReg(final long i2c, final short addr, final short reg, final short value) {
-        final var msg = new I2cMsg();
-        msg.addr = addr;
-        msg.flags = 0x00;
-        // Data consists of register and value
-        final byte[] data = {(byte) reg, (byte) value};
-        msg.len = (short) data.length;
-        // Allocate native memory for buffer
-        final var writeBuf = malloc(msg.len);
-        // Move data to native memory
-        memMove(writeBuf, data, msg.len);
-        msg.buf = writeBuf;
-        // Transfer message
-        final var err = i2cTransfer(i2c, msg, 1);
-        // Free native memory buffer
-        free(writeBuf);
-        return err;
+    public static int i2cWriteReg8(final long i2c, final short addr, final short reg, final short value) {
+        return i2cWrite8(i2c, addr, reg, value);
     }
 
     /**
@@ -276,6 +231,35 @@ public class I2c implements AutoCloseable {
     @JniMethod(accessor = "i2c_open")
     public static native int i2cOpen(long i2c, String path);
 
+    /**
+     * Helper function to read 8 bit register address.
+     * 
+     * @param i2c Valid pointer to an allocated I2C handle structure.
+     * @param addr Address.
+     * @param reg Register.
+     * @param buf Buffer.
+     * @param len Buffer length.
+     * @return 0 on success, or a negative I2C error code on failure.
+     */
+    @JniMethod(accessor = "i2c_read8")
+    public static native int i2cRead8(long i2c, short addr, short reg, byte[] buf, long len);
+
+    /**
+     * Helper function to read 16 bit register address.
+     * 
+     * @param i2c Valid pointer to an allocated I2C handle structure.
+     * @param addr Address.
+     * @param reg Register.
+     * @param buf Buffer.
+     * @param len Buffer length.
+     * @return 0 on success, or a negative I2C error code on failure.
+     */
+    @JniMethod(accessor = "i2c_read16")
+    public static native int i2cRead16(long i2c, short addr, short reg, byte[] buf, long len);
+
+    @JniMethod(accessor = "i2c_write8")
+    public static native int i2cWrite8(long i2c, short addr, short reg, short value);
+    
     /**
      * Transfer count number of struct i2c_msg I2C messages.
      *

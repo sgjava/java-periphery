@@ -62,7 +62,7 @@ public class Adxl345 implements Callable<Integer> {
      */
     public short getRange(final long handle, final short addr) {
         final var buf = new short[1];
-        I2c.i2cReadReg(handle, addr, (short) 0x31, buf);
+        I2c.i2cReadReg8(handle, addr, (short) 0x31, buf);
         return (short) (buf[0] & 0x03);
     }
 
@@ -90,8 +90,8 @@ public class Adxl345 implements Callable<Integer> {
     public void setRange(final long handle, final short addr, final short value) {
         // 0x08 sets fill resolution bit to enabled
         final var buf = new short[1];
-        I2c.i2cReadReg(handle, addr, (short) 0x31, buf);
-        I2c.i2cWriteReg(handle, addr, (short) 0x31, (short) (((buf[0] & ~0x0f) | value) | 0x08));
+        I2c.i2cReadReg8(handle, addr, (short) 0x31, buf);
+        I2c.i2cWriteReg8(handle, addr, (short) 0x31, (short) (((buf[0] & ~0x0f) | value) | 0x08));
     }
 
     /**
@@ -109,7 +109,7 @@ public class Adxl345 implements Callable<Integer> {
      */
     public boolean getFullResolution(final long handle, final short addr) {
         final var buf = new short[1];
-        I2c.i2cReadReg(handle, addr, (short) 0x31, buf);
+        I2c.i2cReadReg8(handle, addr, (short) 0x31, buf);
         return (short) (buf[0] & 0x08) == (short) 0x08;
     }
 
@@ -149,7 +149,7 @@ public class Adxl345 implements Callable<Integer> {
      */
     public short getDataRate(final long handle, final short addr) {
         final var buf = new short[1];
-        I2c.i2cReadReg(handle, addr, (short) 0x2c, buf);
+        I2c.i2cReadReg8(handle, addr, (short) 0x2c, buf);
         return (short) (buf[0] & 0x0f);
     }
 
@@ -189,7 +189,7 @@ public class Adxl345 implements Callable<Integer> {
      * @param value Data rate.
      */
     public void setDataRate(final long handle, final short addr, final short value) {
-        I2c.i2cWriteReg(handle, addr, (short) 0x2c, (short) (value & 0x0f));
+        I2c.i2cWriteReg8(handle, addr, (short) 0x2c, (short) (value & 0x0f));
     }
 
     /**
@@ -218,7 +218,7 @@ public class Adxl345 implements Callable<Integer> {
     public Map<String, Integer> read(final long handle, final short addr) {
         // Read all 6 registers at once
         final var data = new byte[6];
-        I2c.i2cReadReg(handle, addr, (short) 0x32, data);
+        I2c.i2cReadReg8(handle, addr, (short) 0x32, data);
         final Map<String, Integer> map = new HashMap<>();
         map.put("x", bytesToInt(data[0], data[1]));
         map.put("y", bytesToInt(data[2], data[3]));
@@ -266,10 +266,10 @@ public class Adxl345 implements Callable<Integer> {
         try (final var i2c = new I2c(device)) {
             // Check device ID
             final var buf = new short[1];
-            I2c.i2cReadReg(i2c.getHandle(), address, (short) 0x00, buf);
+            I2c.i2cReadReg8(i2c.getHandle(), address, (short) 0x00, buf);
             if (buf[0] == 0xe5) {
                 // Enable the accelerometer
-                I2c.i2cWriteReg(i2c.getHandle(), address, (short) 0x2d, (short) 0x08);
+                I2c.i2cWriteReg8(i2c.getHandle(), address, (short) 0x2d, (short) 0x08);
                 // +/- 2g
                 setRange(i2c.getHandle(), address, (short) 0x00);
                 // 100 Hz

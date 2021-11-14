@@ -45,5 +45,6 @@
 #include "i2c.h"
 #include "mmio.h"
 #include "serial.h"
+#include "javaperiphery.h"
 
 #endif /* INCLUDED_PLATFORM_H */
