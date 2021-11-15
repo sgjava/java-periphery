@@ -70,7 +70,7 @@ the main objective, not an afterthought.
 * [Pi4J](https://pi4j.com) limited to Raspberry Pi and JDK 11.
 * [Bulldog](https://github.com/SilverThings/bulldog) only a few boards supported. One off native code required for each board.
 * [diozero](https://github.com/mattjlewis/diozero) Almost 600 Java files compared to 33 for Java Periphery.
-Root access required in some situations.
+One off MMIO GPIO hand coded for each board instead of using simple configuration files.
 
 ## SBC configuration
 * If you are using Armbian then use `armbian-config` or edit `/boot/armbianEnv.txt`
