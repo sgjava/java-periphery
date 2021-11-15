@@ -69,7 +69,7 @@ board can be used right away. There's always tradeoffs, but I made portability
 the main objective, not an afterthought. 
 * [Pi4J](https://pi4j.com) limited to Raspberry Pi and JDK 11.
 * [Bulldog](https://github.com/SilverThings/bulldog) only a few boards supported. One off native code required for each board.
-* [diozero](https://github.com/mattjlewis/diozero) limited to JDK 11. Almost 600 Java files compared to 33 for Java Periphery.
+* [diozero](https://github.com/mattjlewis/diozero) Almost 600 Java files compared to 33 for Java Periphery.
 Root access required in some situations.
 
 ## SBC configuration
