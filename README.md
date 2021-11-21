@@ -141,9 +141,11 @@ The Java Periphery POM uses download-maven-plugin to download c-periphery source
 to `src/main/native-package/src`. The files are cached in
 `~/.m2/repository/.cache/download-maven-plugin`, so they are not downloaded
 again unless they are updated. If you want to build the GPIO C code to use sysfs
-comment out `<configureArgs>` in the `hawtjni-maven-plugin` section of the POM.
+comment remove `-DPERIPHERY_GPIO_CDEV_SUPPORT=1` from `<configureArgs>` in the
+`hawtjni-maven-plugin` section of the POM.
 
 ### Run script
+Make sure you run scipt as non-root user and without sudo.
 * `cd ~/java-periphery/scripts`
 * `./install.sh`
 * Check various log files if you have issues running the demo code. Something
