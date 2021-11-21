@@ -145,7 +145,7 @@ comment remove `-DPERIPHERY_GPIO_CDEV_SUPPORT=1` from `<configureArgs>` in the
 `hawtjni-maven-plugin` section of the POM.
 
 ### Run script
-Make sure you run scipt as non-root user and without sudo.
+Make sure you run script as non-root user and without sudo.
 * `cd ~/java-periphery/scripts`
 * `./install.sh`
 * Check various log files if you have issues running the demo code. Something
