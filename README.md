@@ -275,5 +275,3 @@ you to profile your applications.
 [Download](https://www.azul.com/products/components/zulu-mission-control/#block-download)
 zmc and launch on your desktop. To profile your Java Periphery application use:
 `java -XX:+FlightRecorder -Djava.rmi.server.hostname=your_ip -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=8888 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -cp java-periphery-1.0.0-SNAPSHOT.jar:java-periphery-1.0.0-SNAPSHOT-linux32.jar com.codeferm.periphery.demo.GpioPerf`
-
-![Title](images/zmc.png)
