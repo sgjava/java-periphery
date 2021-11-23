@@ -44,9 +44,7 @@ bindings. The idea is to have consistent APIs across
 to use one off board specific drivers, 
 [deprecated wiringPi](http://wiringpi.com/wiringpi-deprecated) or the
 [deprecated sysfs](https://www.kernel.org/doc/html/latest/admin-guide/gpio/sysfs.html)
-interface. The possibility of using other JVM based languages such as Groovy,
-Kotlin, Scala, etc. opens up language opportunities that do not currently exist
-in the IoT space.
+interface.
 * Why Linux userspace? This is really the only way to get cross platform
 libraries to work since most SBCs have different chip sets. The trade off is
 performance compared to native C written to specific chip sets. However, since
@@ -57,9 +55,9 @@ SBC cross platform. See [downloads](https://www.armbian.com/download).
 previous LTS release is end of life September 2023. I'm only moving forward
 with Java. You can always create a fork and make a Java 8 or Java 11 version of
 Java Periphery.
-* Why Zulu OpenJDK? Because it's easy to download without all the crap Oracle
-puts you through. You can always use another JDK 17 vendor, but you will have to
-do that manually.
+* Why Liberica Standard JDK? Because it's easy to download without all the crap
+Oracle puts you through. You can always use another JDK 17 vendor, but you will
+have to do that manually.
 
 ## Project comparison
 In general it's nice to have a library of devices, but most libraries then have
@@ -133,7 +131,7 @@ The install script assumes a clean OS install. If you would like to install on
 a OS with your own version of Java 17, etc. then you can look at what install.sh
 does and do it manually. What does the script do?
 * Install build dependencies for HawtJNI 
-* Installs Zulu OpenJDK 17 to /usr/lib/jvm (JDK 11 is used for ARM32)
+* Installs Liberica Standard JDK 17 to /usr/lib/jvm
 * Installs Maven to /opt
 * Build HawtJNI (using my fork that works with JDK 17)
 * Build Java Periphery
@@ -141,7 +139,7 @@ The Java Periphery POM uses download-maven-plugin to download c-periphery source
 to `src/main/native-package/src`. The files are cached in
 `~/.m2/repository/.cache/download-maven-plugin`, so they are not downloaded
 again unless they are updated. If you want to build the GPIO C code to use sysfs
-comment remove `-DPERIPHERY_GPIO_CDEV_SUPPORT=1` from `<configureArgs>` in the
+remove `-DPERIPHERY_GPIO_CDEV_SUPPORT=1` from `<configureArgs>` in the
 `hawtjni-maven-plugin` section of the POM.
 
 ### Run script
@@ -161,7 +159,6 @@ correct gpio.h include. After the install.sh script completes:
 * `cp /usr/src/linux-headers-5.9.11-sunxi/include/uapi/linux/gpio.h $HOME/include/linux/.` (use actual path)
 * `cd ~/java-periphery`
 * `mvn clean install "-Dcflags=-I$HOME/include"`
-* Add `-Dmaven.compiler.source=11 -Dmaven.compiler.target=11` for ARM32
 
 ## High performance GPIO using MMIO
 I have created a generic way to achieve fast GPIO for times when performance (bit
@@ -268,12 +265,3 @@ After bulding Java Periphery simpily add the following artifact:
 <artifactId>java-periphery</artifactId>
 <version>1.0.0-SNAPSHOT</version>
 ```
-
-## Zulu Mission Control (JDK 17 not supported yet)
-[Azul Mission Control](https://www.azul.com/products/components/zulu-mission-control) allows
-you to profile your applications.
-[Download](https://www.azul.com/products/components/zulu-mission-control/#block-download)
-zmc and launch on your desktop. To profile your Java Periphery application use:
-`java -XX:+FlightRecorder -Djava.rmi.server.hostname=your_ip -Dcom.sun.management.jmxremote=true -Dcom.sun.management.jmxremote.port=8888 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -cp java-periphery-1.0.0-SNAPSHOT.jar:java-periphery-1.0.0-SNAPSHOT-linux32.jar com.codeferm.periphery.demo.GpioPerf`
-
-![Title](images/zmc.png)

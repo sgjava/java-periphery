@@ -4,7 +4,7 @@
 #
 # @author: sgoldsmith
 #
-# Install dependencies, Zulu OpenJDK 11/17 and Maven for Ubuntu/Debian.
+# Install dependencies, Liberica Standard JDK 17 and Maven for Ubuntu/Debian.
 # If JDK or Maven was already installed with this script then they will be
 # replaced.
 #
@@ -38,24 +38,20 @@ javahome=/usr/lib/jvm/jdk17
 jdk=17
 # ARM 32
 if [ "$arch" = "armv7l" ]; then
-    jdkurl="https://cdn.azul.com/zulu-embedded/bin/zulu11.52.13-ca-jdk11.0.13-linux_aarch32hf.tar.gz"
-    #  No JDK 17 for ARM32
-    javahome=/usr/lib/jvm/jdk11
-    jdk=11
+    jdkurl="https://download.bell-sw.com/java/17+35/bellsoft-jdk17+35-linux-arm32-vfp-hflt.tar.gz"
 # ARM 64
 elif [ "$arch" = "aarch64" ]; then
-    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-linux_aarch64.tar.gz"
+    jdkurl="https://download.bell-sw.com/java/17+35/bellsoft-jdk17+35-linux-aarch64.tar.gz"
 # X86_32
 elif [ "$arch" = "i586" ] || [ "$arch" = "i686" ]; then
-    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-linux_i686.tar.gz"
+    jdkurl="https://download.bell-sw.com/java/17+35/bellsoft-jdk17+35-linux-i586.tar.gz"
 # X86_64	
 elif [ "$arch" = "x86_64" ]; then
-    jdkurl="https://cdn.azul.com/zulu/bin/zulu17.30.15-ca-jdk17.0.1-linux_x64.tar.gz"
+    jdkurl="https://download.bell-sw.com/java/17+35/bellsoft-jdk17+35-linux-amd64.tar.gz"
 fi
 export javahome
 # Just JDK archive name
 jdkarchive=$(basename "$jdkurl")
-
 
 log "Installing Java..."
 # Remove temp dir
@@ -63,17 +59,14 @@ log "Removing temp dir $tmpdir"
 rm -rf "$tmpdir" >> $logfile 2>&1
 mkdir -p "$tmpdir" >> $logfile 2>&1
 
-# Install Zulu Java JDK
+# Install Liberica Standard JDK
 log "Downloading $jdkarchive to $tmpdir"
 wget -q --directory-prefix=$tmpdir "$jdkurl" >> $logfile 2>&1
 log "Extracting $jdkarchive to $tmpdir"
 tar -xf "$tmpdir/$jdkarchive" -C "$tmpdir" >> $logfile 2>&1
 log "Removing $javahome"
 sudo -E rm -rf "$javahome" >> $logfile 2>&1
-# Remove .gz
-filename="${jdkarchive%.*}"
-# Remove .tar
-filename="${filename%.*}"
+filename="jdk-17"
 sudo mkdir -p /usr/lib/jvm >> $logfile 2>&1
 log "Moving $tmpdir/$filename to $javahome"
 sudo mv "$tmpdir/$filename" "$javahome" >> $logfile 2>&1
@@ -93,9 +86,9 @@ sudo -E sh -c 'echo "JAVA_HOME=$javahome" >> /etc/environment'
 log "JAVA_HOME = $JAVA_HOME"
 
 # Apache Maven
-mavenurl="http://www.gtlib.gatech.edu/pub/apache/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.tar.gz"
+mavenurl="https://downloads.apache.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz"
 mavenarchive=$(basename "$mavenurl")
-mavenver="apache-maven-3.8.3"
+mavenver="apache-maven-3.8.4"
 mavenhome="/opt/maven"
 export mavenhome
 mavenbin="/opt/maven/bin"
@@ -131,7 +124,7 @@ log "PATH = $PATH"
 log "Removing $tmpdir"
 rm -rf "$tmpdir" >> $logfile 2>&1
 
-# HawtJNI install
+# HawtJNI install (this is my fork compatible with JDK 17)
 export JAVA_HOME=$javahome
 cd >> $logfile 2>&1
 log "Removing hawtjni"
