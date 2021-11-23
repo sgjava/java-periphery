@@ -93,9 +93,9 @@ sudo -E sh -c 'echo "JAVA_HOME=$javahome" >> /etc/environment'
 log "JAVA_HOME = $JAVA_HOME"
 
 # Apache Maven
-mavenurl="http://www.gtlib.gatech.edu/pub/apache/maven/maven-3/3.8.3/binaries/apache-maven-3.8.3-bin.tar.gz"
+mavenurl="https://downloads.apache.org/maven/maven-3/3.8.4/binaries/apache-maven-3.8.4-bin.tar.gz"
 mavenarchive=$(basename "$mavenurl")
-mavenver="apache-maven-3.8.3"
+mavenver="apache-maven-3.8.4"
 mavenhome="/opt/maven"
 export mavenhome
 mavenbin="/opt/maven/bin"
