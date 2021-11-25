@@ -43,12 +43,12 @@ public class ButtonThread implements Callable<Integer> {
     /**
      * Device option.
      */
-    @Option(names = {"-d", "--device"}, description = "GPIO device defaults to /dev/gpiochip1")
+    @Option(names = {"-d", "--device"}, description = "GPIO device, ${DEFAULT-VALUE} by default.")
     private String device = "/dev/gpiochip1";
     /**
      * Line option.
      */
-    @Option(names = {"-l", "--line"}, description = "GPIO line defaults to 3 for NanoPi Duo built-in button")
+    @Option(names = {"-l", "--line"}, description = "GPIO line, ${DEFAULT-VALUE} by default.")
     private int line = 3;
 
     /**

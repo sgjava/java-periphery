@@ -32,12 +32,12 @@ public class Adxl345 implements Callable<Integer> {
     /**
      * Device option.
      */
-    @Option(names = {"-d", "--device"}, description = "I2C device defaults to /dev/i2c-0")
+    @Option(names = {"-d", "--device"}, description = "I2C device, ${DEFAULT-VALUE} by default.")
     private String device = "/dev/i2c-0";
     /**
      * Address option.
      */
-    @Option(names = {"-a", "--address"}, description = "Address defaults to 0x53")
+    @Option(names = {"-a", "--address"}, description = "Address, ${DEFAULT-VALUE} by default.")
     private short address = 0x53;
 
     /**
@@ -294,13 +294,16 @@ public class Adxl345 implements Callable<Integer> {
         }
         return exitCode;
     }
-    
+
     /**
      * Main parsing, error handling and handling user requests for usage help or version help are done with one line of code.
      *
      * @param args Argument list.
      */
     public static void main(String... args) {
-        System.exit(new CommandLine(new Adxl345()).execute(args));
-    }    
+        System.exit(new CommandLine(new Adxl345()).registerConverter(Byte.class, Byte::decode).registerConverter(Byte.TYPE,
+                Byte::decode).registerConverter(Short.class, Short::decode).registerConverter(Short.TYPE, Short::decode).
+                registerConverter(Integer.class, Integer::decode).registerConverter(Integer.TYPE, Integer::decode).
+                registerConverter(Long.class, Long::decode).registerConverter(Long.TYPE, Long::decode).execute(args));
+    }
 }

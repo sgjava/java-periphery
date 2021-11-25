@@ -30,12 +30,12 @@ public class SerialLoopback implements Callable<Integer> {
     /**
      * Device option.
      */
-    @Option(names = {"-d", "--device"}, description = "Serial device defaults to //dev/ttyS1")
+    @Option(names = {"-d", "--device"}, description = "Serial device, ${DEFAULT-VALUE} by default.")
     private String device = "/dev/ttyS1";
     /**
      * Baud rate.
      */
-    @Option(names = {"-b", "--baud"}, description = "Baud rate defaults to 115200")
+    @Option(names = {"-b", "--baud"}, description = "Baud rate, ${DEFAULT-VALUE} by default.")
     private int baud = 115200;
 
     /**

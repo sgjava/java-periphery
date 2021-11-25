@@ -29,7 +29,7 @@ public class SysLedBlink implements Callable<Integer> {
     /**
      * Device option.
      */
-    @Option(names = {"-n", "--name"}, description = "System LED defaults to nanopi:green:pwr")
+    @Option(names = {"-n", "--name"}, description = "System LED defaults, ${DEFAULT-VALUE} by default.")
     private String name = "nanopi:green:pwr";
 
     /**

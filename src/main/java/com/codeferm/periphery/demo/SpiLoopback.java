@@ -30,7 +30,7 @@ public class SpiLoopback implements Callable<Integer> {
     /**
      * Device option.
      */
-    @Option(names = {"-d", "--device"}, description = "SPI device defaults to /dev/spidev1.0")
+    @Option(names = {"-d", "--device"}, description = "SPI device, ${DEFAULT-VALUE} by default.")
     private String device = "/dev/spidev1.0";
 
     /**

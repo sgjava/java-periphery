@@ -29,12 +29,12 @@ public class LedFlash implements Callable<Integer> {
     /**
      * Chip option.
      */
-    @Option(names = {"-d", "--device"}, description = "PWM device defaults to 0")
+    @Option(names = {"-d", "--device"}, description = "PWM device, ${DEFAULT-VALUE} by default.")
     private int chip = 0;
     /**
      * Line option.
      */
-    @Option(names = {"-c", "--channel"}, description = "PWM pin defaults to 0 DEBUG_RX(UART_RXD0)/GPIOA5/PWM0 NanoPi Duo")
+    @Option(names = {"-c", "--channel"}, description = "PWM pin, ${DEFAULT-VALUE} by default.")
     private int channel = 0;
 
     /**

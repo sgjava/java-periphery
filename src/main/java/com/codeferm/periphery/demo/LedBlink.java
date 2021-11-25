@@ -38,12 +38,12 @@ public class LedBlink implements Callable<Integer> {
     /**
      * Device option.
      */
-    @Option(names = {"-d", "--device"}, description = "GPIO device defaults to /dev/gpiochip0")
+    @Option(names = {"-d", "--device"}, description = "GPIO device, ${DEFAULT-VALUE} by default.")
     private String device = "/dev/gpiochip0";
     /**
      * Line option.
      */
-    @Option(names = {"-l", "--line"}, description = "GPIO line defaults to 203 IOG11 for NanoPi Duo")
+    @Option(names = {"-l", "--line"}, description = "GPIO line, ${DEFAULT-VALUE} by default.")
     private int line = 203;
     
     /**
