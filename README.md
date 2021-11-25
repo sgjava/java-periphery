@@ -14,6 +14,9 @@ This gets attached to the Maven project as as the native source zip file.
 to the Maven project as a platform specific jar file.
 * Cross platform MMIO GPIO that doesn't require one off code for each board. Only
 a simple property file is required to map registers.
+* All demo programs require command line arguments to set devices, lines, etc.
+No need to compile one off examples, change property files or use worthless
+mocks.
 * All wrapper classes support AutoCloseable, so you can use the
 [try-with-resources](https://docs.oracle.com/javase/tutorial/essential/exceptions/tryResourceClose.html)
 statement to automatically close and free native resources. This prevents hard
@@ -250,7 +253,7 @@ character device.
 Note that the native library jar has a suffix such as linux32, so depending on
 your target platform it could be different. To see a list of demos 
 [browse](https://github.com/sgjava/java-periphery/tree/master/src/main/java/com/codeferm/periphery/demo)
-code.
+code. Just pass in --help to get list of command line arguments.
 
 ## Use Java Periphery in your own Maven projects
 After bulding Java Periphery simpily add the following artifact:
