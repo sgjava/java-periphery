@@ -45,8 +45,7 @@ to use one off board specific drivers,
 [deprecated wiringPi](http://wiringpi.com/wiringpi-deprecated) or the
 [deprecated sysfs](https://www.kernel.org/doc/html/latest/admin-guide/gpio/sysfs.html)
 interface. The possibility of using other JVM based languages such as Groovy,
-Kotlin, Scala, etc. opens up language opportunities that do not currently exist
-in the IoT space.
+Kotlin, Scala, etc. opens up more language opportunities.
 * Why Linux userspace? This is really the only way to get cross platform
 libraries to work since most SBCs have different chip sets. The trade off is
 performance compared to native C written to specific chip sets. However, since
@@ -59,18 +58,10 @@ with Java. You can always create a fork and make a Java 8 or Java 11 version of
 Java Periphery.
 * Why Zulu OpenJDK? Because it's easy to download without all the crap Oracle
 puts you through. You can always use another JDK 17 vendor, but you will have to
-do that manually.
-
-## Project comparison
-In general it's nice to have a library of devices, but most libraries then have
-limited board support. My choice was to support over a hundred boards and port
-device code as needed. Also, by not using any board specific native code a new
-board can be used right away. There's always tradeoffs, but I made portability
-the main objective, not an afterthought. 
-* [Pi4J](https://pi4j.com) limited to Raspberry Pi and JDK 11.
-* [Bulldog](https://github.com/SilverThings/bulldog) only a few boards supported. One off native code required for each board.
-* [diozero](https://github.com/mattjlewis/diozero) Almost 600 Java files compared to 33 for Java Periphery.
-One off MMIO GPIO hand coded for each board instead of using simple configuration files.
+do that manually. [Liberica JDK](https://bell-sw.com/pages/downloads/?version=java-17-lts)
+offers an ARM32 version of JDK 17, but it's 50% slower than Zulu JDK 11. At This
+point in time there are few JDK 17 choices for ARM32. I will update the project
+once a decent JDK is available for ARM32.
 
 ## SBC configuration
 * If you are using Armbian then use `armbian-config` or edit `/boot/armbianEnv.txt`
@@ -254,7 +245,7 @@ starts at 352 and the on board button is at 355, so 355 - 352 = 3 for GPIO
 character device.
 
 ## Run demos
-* `java -cp $HOME/java-periphery/target/java-periphery-1.0.0-SNAPSHOT.jar:$HOME/java-periphery/target/java-periphery-1.0.0-SNAPSHOT-linux32.jar com.codeferm.periphery.demo.LedBlink -d /dev/gpiochip0 -l 203`
+* `java -cp $HOME/java-periphery/target/java-periphery-1.0.0-SNAPSHOT.jar:$HOME/java-periphery/target/java-periphery-1.0.0-SNAPSHOT-linux32.jar com.codeferm.periphery.demo.LedBlink --help`
 
 Note that the native library jar has a suffix such as linux32, so depending on
 your target platform it could be different. To see a list of demos 
