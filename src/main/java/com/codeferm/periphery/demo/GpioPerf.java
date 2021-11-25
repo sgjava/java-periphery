@@ -21,7 +21,7 @@ import picocli.CommandLine.Option;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Command(name = "gpioperf", mixinStandardHelpOptions = true, version = "gpioperf 1.0.0",
+@Command(name = "GpioPerf", mixinStandardHelpOptions = true, version = "1.0.0-SNAPSHOT",
         description = "Test GPIO performance.")
 public class GpioPerf implements Callable<Integer> {
 

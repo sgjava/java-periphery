@@ -18,7 +18,7 @@ import picocli.CommandLine.Option;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Command(name = "sysledblink", mixinStandardHelpOptions = true, version = "sysledblink 1.0.0",
+@Command(name = "SysLedBlink", mixinStandardHelpOptions = true, version = "1.0.0-SNAPSHOT",
         description = "Turn LED on and off.")
 public class SysLedBlink implements Callable<Integer> {
 

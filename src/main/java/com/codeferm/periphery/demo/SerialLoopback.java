@@ -19,7 +19,7 @@ import picocli.CommandLine.Option;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Command(name = "serialloopback", mixinStandardHelpOptions = true, version = "serialloopback 1.0.0",
+@Command(name = "SerialLoopback", mixinStandardHelpOptions = true, version = "1.0.0-SNAPSHOT",
         description = "Send data between RX and TX pins.")
 public class SerialLoopback implements Callable<Integer> {
 

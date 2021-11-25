@@ -21,7 +21,7 @@ import picocli.CommandLine.Option;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Command(name = "adxl345", mixinStandardHelpOptions = true, version = "adxl345 1.0.0",
+@Command(name = "Adxl345", mixinStandardHelpOptions = true, version = "1.0.0-SNAPSHOT",
         description = "ADXL345 3-Axis, ±2 g/±4 g/±8 g/±16 g digital accelerometer example.")
 public class Adxl345 implements Callable<Integer> {
 

@@ -19,7 +19,7 @@ import picocli.CommandLine.Option;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Command(name = "spiloopback", mixinStandardHelpOptions = true, version = "spiloopback 1.0.0",
+@Command(name = "SpiLoopback", mixinStandardHelpOptions = true, version = "1.0.0-SNAPSHOT",
         description = "Send data between MOSI and MISO pins.")
 public class SpiLoopback implements Callable<Integer> {
 

@@ -28,7 +28,7 @@ import picocli.CommandLine.Option;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Command(name = "buttonwait", mixinStandardHelpOptions = true, version = "buttonwait 1.0.0",
+@Command(name = "ButtonWait", mixinStandardHelpOptions = true, version = "1.0.0-SNAPSHOT",
         description = "Uses edge detection to wait for button press.")
 public class ButtonWait implements Callable<Integer> {
 

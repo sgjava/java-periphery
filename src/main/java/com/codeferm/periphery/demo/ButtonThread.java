@@ -32,7 +32,7 @@ import picocli.CommandLine.Option;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Command(name = "buttonthread", mixinStandardHelpOptions = true, version = "buttonthread 1.0.0",
+@Command(name = "ButtonThread", mixinStandardHelpOptions = true, version = "1.0.0-SNAPSHOT",
         description = "Uses edge detection to wait for button press while other processing occurs.")
 public class ButtonThread implements Callable<Integer> {
 

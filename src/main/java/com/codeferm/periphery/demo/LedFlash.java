@@ -18,7 +18,7 @@ import picocli.CommandLine.Option;
  * @version 1.0.0
  * @since 1.0.0
  */
-@Command(name = "ledflash", mixinStandardHelpOptions = true, version = "ledflash 1.0.0",
+@Command(name = "LedFlash", mixinStandardHelpOptions = true, version = "1.0.0-SNAPSHOT",
         description = "Flash LED with PWM.")
 public class LedFlash implements Callable<Integer> {
 
