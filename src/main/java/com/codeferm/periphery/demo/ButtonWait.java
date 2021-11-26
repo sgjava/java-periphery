@@ -9,10 +9,6 @@ import static com.codeferm.periphery.Gpio.GPIO_EDGE_BOTH;
 import static com.codeferm.periphery.Gpio.GPIO_EDGE_FALLING;
 import static com.codeferm.periphery.Gpio.GPIO_EDGE_RISING;
 import static com.codeferm.periphery.Gpio.GPIO_POLL_EVENT;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.concurrent.Callable;
 import org.apache.logging.log4j.LogManager;
 import picocli.CommandLine;
@@ -56,7 +52,6 @@ public class ButtonWait implements Callable<Integer> {
     public Integer call() {
         var exitCode = 0;
         try (final var gpio = new Gpio(device, line, GPIO_DIR_IN)) {
-            final var formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
             final var edge = new int[1];
             final var timestamp = new long[1];
             Gpio.gpioSetEdge(gpio.getHandle(), GPIO_EDGE_BOTH);
@@ -64,13 +59,13 @@ public class ButtonWait implements Callable<Integer> {
             // Poll for event and timeout in 10 seconds if no event
             while (Gpio.gpioPoll(gpio.getHandle(), 10000) == GPIO_POLL_EVENT) {
                 Gpio.gpioReadEvent(gpio.getHandle(), edge, timestamp);
-                final var date = LocalDateTime.ofInstant(Instant.ofEpochMilli(timestamp[0] / 1000000), ZoneId.systemDefault());
                 if (edge[0] == GPIO_EDGE_RISING) {
-                    logger.info(String.format("Edge rising, %s", date.format(formatter)));
+                    logger.info(String.format("Edge rising, [%8d.%9d]", timestamp[0] / 1000000000, timestamp[0] % 1000000000));
                 } else if (edge[0] == GPIO_EDGE_FALLING) {
-                    logger.info(String.format("Edge falling %s", date.format(formatter)));
+                    logger.info(String.format("Edge falling [%8d.%9d]", timestamp[0] / 1000000000, timestamp[0] % 1000000000));
                 } else {
-                    logger.info(String.format("Invalid edge %d, %s", edge[0], date.format(formatter)));
+                    logger.info(String.format("Invalid edge %d, [%8d.%9d]", edge[0], timestamp[0] / 1000000000, timestamp[0]
+                            % 1000000000));
                 }
             }
         } catch (RuntimeException e) {
@@ -79,7 +74,7 @@ public class ButtonWait implements Callable<Integer> {
         }
         return exitCode;
     }
-    
+
     /**
      * Main parsing, error handling and handling user requests for usage help or version help are done with one line of code.
      *
