@@ -66,7 +66,7 @@ public class ButtonThread implements Callable<Integer> {
                 while (Gpio.gpioPoll(gpio.getHandle(), 10000) == GPIO_POLL_EVENT) {
                     Gpio.gpioReadEvent(gpio.getHandle(), edge, timestamp);
                     if (edge[0] == GPIO_EDGE_RISING) {
-                        logger.info(String.format("Edge rising [%8d.%9d]", timestamp[0] / 1000000000, timestamp[0] % 1000000000));
+                        logger.info(String.format("Edge rising  [%8d.%9d]", timestamp[0] / 1000000000, timestamp[0] % 1000000000));
                     } else if (edge[0] == GPIO_EDGE_FALLING) {
                         logger.info(String.format("Edge falling [%8d.%9d]", timestamp[0] / 1000000000, timestamp[0] % 1000000000));
                     } else {
