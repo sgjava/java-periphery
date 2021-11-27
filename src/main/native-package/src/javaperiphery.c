@@ -7,7 +7,7 @@
 #include "javaperiphery.h"
 
 /*
- * Read I2C 8 bit register.
+ * Read I2C 8 bit address.
  */
 int i2c_read8(i2c_t *i2c, uint16_t addr, uint16_t reg, uint8_t *buf, size_t len) {
         // 8 bit register
@@ -22,7 +22,7 @@ int i2c_read8(i2c_t *i2c, uint16_t addr, uint16_t reg, uint8_t *buf, size_t len)
 }
 
 /*
- * Read I2C 16 bit register.
+ * Read I2C 16 bit address.
  */
 int i2c_read16(i2c_t *i2c, uint16_t addr, uint16_t reg, uint8_t *buf, size_t len) {
         // 16 bit register high and low byte
@@ -37,7 +37,7 @@ int i2c_read16(i2c_t *i2c, uint16_t addr, uint16_t reg, uint8_t *buf, size_t len
 }
 
 /*
- * Write I2C 8 bit register.
+ * Write I2C 8 bit address.
  */
 int i2c_write8(i2c_t *i2c, uint16_t addr, uint16_t reg, uint16_t value) {
         // 8 bit register
@@ -50,7 +50,7 @@ int i2c_write8(i2c_t *i2c, uint16_t addr, uint16_t reg, uint16_t value) {
 }
 
 /*
- * Write I2C 16 bit register.
+ * Write I2C 16 bit address.
  */
 int i2c_write16(i2c_t *i2c, uint16_t addr, uint16_t reg, uint16_t value) {
         // 16 bit value low/high byte

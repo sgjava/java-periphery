@@ -136,7 +136,7 @@ public class I2c implements AutoCloseable {
     }
 
     /**
-     * Read array from i2c 8 bit register. Unlike i2cReadReg8 the bytes values are not "& 0xff", thus the caller will need to do
+     * Read array from i2c 8 bit address. Unlike i2cReadReg8 the bytes values are not "& 0xff", thus the caller will need to do
      * this.
      *
      * In order to read a register, we first do a "dummy write" by writing 0 bytes to the register we want to read from. This is
@@ -153,7 +153,7 @@ public class I2c implements AutoCloseable {
     }
 
     /**
-     * Read array from i2c 8 bit register.
+     * Read array from i2c 8 bit address.
      *
      * In order to read a register, we first do a "dummy write" by writing 0 bytes to the register we want to read from. This is
      * similar to writing to a register except it's 1 byte rather than 2.
@@ -173,7 +173,7 @@ public class I2c implements AutoCloseable {
     }
 
     /**
-     * Read two i2c 8 bit registers and combine them.
+     * Read two consecutive i2c 8 bit addresses and combine them.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -199,7 +199,7 @@ public class I2c implements AutoCloseable {
     }
 
     /**
-     * Write value to i2c 8 bit register.
+     * Write value to i2c 8 bit address.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -213,7 +213,7 @@ public class I2c implements AutoCloseable {
 
     
     /**
-     * Write value to i2c 16 bit register.
+     * Write value to i2c 16 bit address.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -244,7 +244,7 @@ public class I2c implements AutoCloseable {
     public static native int i2cOpen(long i2c, String path);
 
     /**
-     * Helper function to read 8 bit register address.
+     * Helper function to read from 8 bit address.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -257,7 +257,7 @@ public class I2c implements AutoCloseable {
     public static native int i2cRead8(long i2c, short addr, short reg, byte[] buf, long len);
 
     /**
-     * Helper function to read 16 bit register address.
+     * Helper function to read from 16 bit address.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -270,7 +270,7 @@ public class I2c implements AutoCloseable {
     public static native int i2cRead16(long i2c, short addr, short reg, byte[] buf, long len);
 
     /**
-     * Helper function to write byte to 8 bit register address.
+     * Helper function to write byte to 8 bit address.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
@@ -282,7 +282,7 @@ public class I2c implements AutoCloseable {
     public static native int i2cWrite8(long i2c, short addr, short reg, short value);
 
     /**
-     * Helper function to write byte to 16 bit register address.
+     * Helper function to write byte to 16 bit address.
      *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
