@@ -56,8 +56,8 @@ int i2c_write16(i2c_t *i2c, uint16_t addr, uint16_t reg, uint16_t value) {
         // 16 bit value low/high byte
 	uint8_t msg_addr[3] = { reg, value & 0xff, value >> 8};
 	struct i2c_msg msgs[1] = {
-	// Write 8-bit address
+	// Write 16-bit address
 	{ .addr = addr, .flags = 0, .len = 3, .buf = msg_addr }, };
-	// Transfer a transaction with two I2C messages
+	// Transfer a transaction with three I2C messages
 	return i2c_transfer(i2c, msgs, 1);
 }

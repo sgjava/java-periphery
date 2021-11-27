@@ -4,9 +4,7 @@
 package com.codeferm.periphery;
 
 import static com.codeferm.periphery.Common.MAX_CHAR_ARRAY_LEN;
-import static com.codeferm.periphery.Common.free;
 import static com.codeferm.periphery.Common.jString;
-import static com.codeferm.periphery.Common.malloc;
 import static com.codeferm.periphery.Common.memMove;
 import org.fusesource.hawtjni.runtime.ClassFlag;
 import static org.fusesource.hawtjni.runtime.FieldFlag.CONSTANT;
@@ -91,7 +89,7 @@ public class I2c implements AutoCloseable {
         }
 
         @JniMethod(flags = {CONSTANT_INITIALIZER})
-        private static final native void init();
+        private static native void init();
         @JniField(flags = {CONSTANT}, accessor = "sizeof(struct i2c_msg)")
         public static int SIZEOF;
         public short addr;
@@ -183,7 +181,7 @@ public class I2c implements AutoCloseable {
      * @param regVal Read buffer.
      * @return 0 on success, or a negative I2C error code on failure.
      */
-    public int i2cReadWord8(final long i2c, final short addr, final short reg, final int regVal[]) {
+    public static int i2cReadWord8(final long i2c, final short addr, final short reg, final int regVal[]) {
         final var highBuf = new short[1];
         var error = i2cReadReg8(i2c, addr, reg, highBuf);
         if (error == I2C_SUCCESS) {
@@ -213,6 +211,20 @@ public class I2c implements AutoCloseable {
         return i2cWrite8(i2c, addr, reg, value);
     }
 
+    
+    /**
+     * Write value to i2c 16 bit register.
+     *
+     * @param i2c Valid pointer to an allocated I2C handle structure.
+     * @param addr Address.
+     * @param reg Register.
+     * @param value Value to write.
+     * @return 0 on success, or a negative I2C error code on failure.
+     */
+    public static int i2cWriteReg16(final long i2c, final short addr, final short reg, final short value) {
+        return i2cWrite16(i2c, addr, reg, value);
+    }
+    
     /**
      * Allocate an I2C handle.
      *
@@ -233,7 +245,7 @@ public class I2c implements AutoCloseable {
 
     /**
      * Helper function to read 8 bit register address.
-     * 
+     *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
      * @param reg Register.
@@ -246,7 +258,7 @@ public class I2c implements AutoCloseable {
 
     /**
      * Helper function to read 16 bit register address.
-     * 
+     *
      * @param i2c Valid pointer to an allocated I2C handle structure.
      * @param addr Address.
      * @param reg Register.
@@ -257,8 +269,29 @@ public class I2c implements AutoCloseable {
     @JniMethod(accessor = "i2c_read16")
     public static native int i2cRead16(long i2c, short addr, short reg, byte[] buf, long len);
 
+    /**
+     * Helper function to write byte to 8 bit register address.
+     *
+     * @param i2c Valid pointer to an allocated I2C handle structure.
+     * @param addr Address.
+     * @param reg Register.
+     * @param value Value to write.
+     * @return 0 on success, or a negative I2C error code on failure.
+     */
     @JniMethod(accessor = "i2c_write8")
     public static native int i2cWrite8(long i2c, short addr, short reg, short value);
+
+    /**
+     * Helper function to write byte to 16 bit register address.
+     *
+     * @param i2c Valid pointer to an allocated I2C handle structure.
+     * @param addr Address.
+     * @param reg Register.
+     * @param value Value to write.
+     * @return 0 on success, or a negative I2C error code on failure.
+     */
+    @JniMethod(accessor = "i2c_write16")
+    public static native int i2cWrite16(long i2c, short addr, short reg, short value);
     
     /**
      * Transfer count number of struct i2c_msg I2C messages.
