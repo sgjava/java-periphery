@@ -1,5 +1,7 @@
 ![Title](images/title.png)
 
+### Java Periphery is being merged into [Java UIO](https://github.com/sgjava/javauio). I'll leave this up as a place holder for a while.
+
 Java Periphery is a high performance library for GPIO, LED, PWM, SPI, I2C, MMIO
 and Serial peripheral I/O interface access in userspace Linux. Rather than try to
 build this from scratch I used [c-periphery](https://github.com/vsergeev/c-periphery)
